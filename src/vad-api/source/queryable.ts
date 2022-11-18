@@ -6,7 +6,7 @@ export interface BasicQueryParams {
 
 export interface PagedData<T> { total: number, data: T[] }
 
-export default abstract class Queryable<T> {
+export default abstract class Queryable<T, E> {
     // 默认的内容
     get defaultObject(): Partial<T> { return {} }
 
@@ -24,7 +24,7 @@ export default abstract class Queryable<T> {
     };
 
     // 查询全部
-    async all(_: BasicQueryParams): Promise<T[] | PagedData<T>> {
+    async all(_: E): Promise<T[] | PagedData<T>> {
         return [
             defaultObjectBuilder() as T,
             defaultObjectBuilder() as T,

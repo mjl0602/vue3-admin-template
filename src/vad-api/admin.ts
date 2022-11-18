@@ -1,12 +1,17 @@
-import Queryable from "./source/queryable";
+import Queryable, { BasicQueryParams } from "./source/queryable";
 
-
+/** 模型 */
 export interface AdminModel {
     id: number,
     name: string,
 }
 
-export default class AdminQuery extends Queryable<AdminModel> {
+/** 搜索条件 */
+export interface AdminModelQueryParmas extends BasicQueryParams {
+
+}
+
+export default class AdminQuery extends Queryable<AdminModel, AdminModelQueryParmas> {
 
     // 默认的内容
     get defaultObject() {
@@ -27,10 +32,10 @@ export default class AdminQuery extends Queryable<AdminModel> {
     };
 
     // 查询全部
-    // async all() {
-    //     var res: AdminModel[] = [];
-    //     return res
-    // }
+    async all(params: AdminModelQueryParmas) {
+        var res: AdminModel[] = [];
+        return res
+    }
 
     // // 上传修改
     // async edit(obj: AdminModel) {

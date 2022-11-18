@@ -3,7 +3,7 @@
     <div class="filter-container-flex">
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="actions.add">添加</el-button>
     </div>
-    <el-table v-loading="$tt.listLoading" :data="$tt.list" element-loading-text="Loading" border fit
+    <el-table v-loading="table.listLoading" :data="table.list" element-loading-text="Loading" border fit
       highlight-current-row>
       <!-- 内容 -->
       <el-table-column label="主键id" align="center">
@@ -12,27 +12,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="banner名称" align="center">
+      <el-table-column label="名称" align="center">
         <template #default="scope">
-          {{ scope.row.bannerName }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="主图" align="center">
-        <template #default="scope">
-          {{ scope.row.mainImg }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="路径" align="center">
-        <template #default="scope">
-          {{ scope.row.url }}
-        </template>
-      </el-table-column>
-
-      <el-table-column label="排序" align="center">
-        <template #default="scope">
-          {{ scope.row.sort }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
 
@@ -47,20 +29,17 @@
       </el-table-column>
     </el-table>
     <!-- 翻页 -->
-    <div class="pagination-container" v-if="$tt.total">
-      <el-pagination :current-page="$tt.query.pageNum" :page-sizes="[5, 10, 20, 30, 50]" :page-size="$tt.query.pageSize"
-        :total="$tt.total" background layout="total, sizes, prev, pager, next, jumper"
-        @size-change="actions.handleSizeChange" @current-change="actions.handleCurrentChange" />
+    <div class="pagination-container" v-if="table.total">
+      <el-pagination :current-page="table.query.pageNum" :page-sizes="[5, 10, 20, 30, 50]"
+        :page-size="table.query.pageSize" :total="table.total" background
+        layout="total, sizes, prev, pager, next, jumper" @size-change="actions.handleSizeChange"
+        @current-change="actions.handleCurrentChange" />
     </div>
-    <el-dialog :visible.sync="$tt.addDialogVisible" :title="actions.dialogTitle">
-      <el-form :model="$tt.row" :rules="$tt.source.rules" label-position="left" label-width="100px"
+    <el-dialog :visible.sync="table.addDialogVisible" :title="actions.dialogTitle">
+      <el-form :model="table.row" :rules="table.source.rules" label-position="left" label-width="100px"
         style="width: 400px; margin-left: 50px">
-        <el-form-item label="主键id" prop="id">
-          <el-input v-model="$tt.row.id" placeHolder="请输入主键id" />
-        </el-form-item>
-
         <el-form-item label="名称" prop="name">
-          <el-input v-model="$tt.row.name" placeHolder="名称" />
+          <el-input v-model="table.row.name" placeHolder="名称" />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -71,12 +50,16 @@
 </template>
   
 <script lang="ts" setup>
-import AdminQuery, { AdminModel } from '@/vad-api/admin';
+import AdminQuery, { AdminModel, AdminModelQueryParmas } from '@/vad-api/admin';
 import { ElButton, ElCheckbox, ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
 import refTable from './basic/basic-table';
 
 const admin = new AdminQuery();
-const [$tt, actions] = refTable<AdminModel>(admin, {});
+const [table, actions] = refTable<AdminModel, AdminModelQueryParmas>(
+  admin,
+  {
+    
+  });
 
 </script>

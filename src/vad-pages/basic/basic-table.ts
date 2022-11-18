@@ -1,28 +1,25 @@
-import Queryable, { PagedData } from "@/vad-api/source/queryable";
+import Queryable, { BasicQueryParams, PagedData } from "@/vad-api/source/queryable";
 import { onMounted, ref, Ref } from "vue";
 import { ElNotification, ElMessageBox } from 'element-plus'
 
-interface TableState<T> {
+interface TableState<T, E extends BasicQueryParams> {
   // 表格内容
   objStr: string,
   list: T[],
   total: number,
   listLoading: boolean,
-  query: {
-    pageNum: number,
-    pageSize: number,
-  },
+  query: E,
   // 添加的Dialog
   addDialogVisible: boolean,
   isNew: boolean,
   // 增加使用的对象
   row: Partial<T>,
   rules: { [P in keyof T]?: any },
-  source: Queryable<T>,
+  source: Queryable<T, E>,
 }
 
-class BasicTable<T> {
-  private _ref?: Ref<TableState<T>>;
+class BasicTable<T, E extends BasicQueryParams> {
+  private _ref?: Ref<TableState<T, E>>;
 
   private get ref() {
     return this._ref!;
@@ -32,28 +29,31 @@ class BasicTable<T> {
     return this._ref!.value;
   }
 
-  static refTable = function <T>(data: Queryable<T>, config: Partial<TableState<T>>): [Ref<TableState<T>>, BasicTable<T>] {
-    const table = new BasicTable<T>();
-    const finalConfig = Object.assign(config, {
+  static refTable = function <T, E extends BasicQueryParams>(
+    data: Queryable<T, E>,
+    queryParams: BasicQueryParams,
+  ): [Ref<TableState<T, E>>, BasicTable<T, E>] {
+    const table = new BasicTable<T, E>();
+    const finalConfig = {
       objStr: '数据',
       list: [],
       total: 0,
       listLoading: false,
-      query: {
+      query: Object.assign(queryParams, {
         pageNum: 1,
         pageSize: 5,
-      },
+      }),
       addDialogVisible: false,
       isNew: false,
       row: {},
       rules: {},
       source: data,
-    });
+    };
     onMounted(() => {
       data._valueGetter = () => table.v.row;
       table.queryAll();
     })
-    const tableRef = ref(finalConfig) as Ref<TableState<T>>
+    const tableRef = ref(finalConfig) as Ref<TableState<T, E>>
     table._ref = tableRef;
     return [
       tableRef,
