@@ -14,7 +14,7 @@ export default abstract class Queryable<T> {
     _valueGetter: () => Partial<T> = () => ({});
 
     // 已输入的数据的Getter
-    get data(): Partial<T> {
+    get currentEditRow(): Partial<T> {
         return this._valueGetter();
     }
 
@@ -24,7 +24,7 @@ export default abstract class Queryable<T> {
     };
 
     // 查询全部
-    async all(query: BasicQueryParams): Promise<T[] | PagedData<T>> {
+    async all(_: BasicQueryParams): Promise<T[] | PagedData<T>> {
         return [
             defaultObjectBuilder() as T,
             defaultObjectBuilder() as T,

@@ -50,6 +50,7 @@ class BasicTable<T> {
       source: data,
     });
     onMounted(() => {
+      data._valueGetter = () => table.v.row;
       table.queryAll();
     })
     const tableRef = ref(finalConfig) as Ref<TableState<T>>

@@ -17,7 +17,7 @@ export default class AdminQuery extends Queryable<AdminModel> {
     _valueGetter: () => Partial<AdminModel> = () => ({});
 
     // 已输入的数据的Getter
-    get data(): Partial<AdminModel> {
+    get currentEditRow(): Partial<AdminModel> {
         return this._valueGetter();
     }
 
