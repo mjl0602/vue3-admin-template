@@ -7,11 +7,11 @@ export interface AdminModel {
 }
 
 /** 搜索条件 */
-export interface AdminModelQueryParmas extends BasicQueryParams {
+export interface AdminQueryParmas extends BasicQueryParams {
     asd: number,
 }
 
-export default class AdminQuery extends Queryable<AdminModel, AdminModelQueryParmas> {
+export default class AdminQuery extends Queryable<AdminModel, AdminQueryParmas> {
 
     // 默认的内容
     get defaultObject() {
@@ -32,7 +32,7 @@ export default class AdminQuery extends Queryable<AdminModel, AdminModelQueryPar
     };
 
     // 查询全部
-    async all(params: AdminModelQueryParmas) {
+    async all(params: AdminQueryParmas) {
         var res: AdminModel[] = [];
         return res
     }

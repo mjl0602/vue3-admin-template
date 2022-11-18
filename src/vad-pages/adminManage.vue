@@ -7,17 +7,11 @@
       highlight-current-row>
       <!-- 内容 -->
       <el-table-column label="主键id" align="center">
-        <template #default="scope">
-          {{ scope.row.id }}
-        </template>
+        <template #default="scope">{{ scope.row.id }}</template>
       </el-table-column>
-
       <el-table-column label="名称" align="center">
-        <template #default="scope">
-          {{ scope.row.name }}
-        </template>
+        <template #default="scope">{{ scope.row.name }}</template>
       </el-table-column>
-
       <!-- 操作 -->
       <el-table-column class-name="status-col" label="操作" align="center" width="220">
         <template #default="scope">
@@ -50,16 +44,16 @@
 </template>
   
 <script lang="ts" setup>
-import AdminQuery, { AdminModel, AdminModelQueryParmas } from '@/vad-api/admin';
+import AdminQuery, { AdminModel, AdminQueryParmas } from '@/vad-api/admin';
 import { ElButton, ElCheckbox, ElForm } from 'element-plus'
 import { reactive, ref } from 'vue'
 import refTable from './basic/basic-table';
 
-const admin = new AdminQuery();
-const [table, actions] = refTable<AdminModel, AdminModelQueryParmas>(
-  admin,
+const [table, actions] = refTable<AdminModel, AdminQueryParmas>(
+  new AdminQuery(),
   {
     asd: 123,
-  });
+  }
+);
 
 </script>
