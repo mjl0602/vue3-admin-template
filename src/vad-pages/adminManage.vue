@@ -52,7 +52,7 @@ import refTable from './basic/basic-table';
 const [table, actions] = refTable<AdminModel, AdminQueryParmas>(
   new AdminQuery(),
   {
-    asd: 123,
+    searchString: '',
   }
 );
 
