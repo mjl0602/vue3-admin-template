@@ -29,7 +29,7 @@ class BasicTable<T, E extends BasicQueryParams> {
     return this._ref!.value;
   }
 
-  static refTable = function <T, E extends BasicQueryParams>(
+  static refTable = function <T, E extends BasicQueryParams = any>(
     data: Queryable<T, E>,
     queryParams: BasicQueryParams,
   ): [Ref<TableState<T, E>>, BasicTable<T, E>] {
