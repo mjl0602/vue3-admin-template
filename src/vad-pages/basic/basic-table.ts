@@ -24,11 +24,11 @@ interface TableState<T> {
 class BasicTable<T> {
   private _ref?: Ref<TableState<T>>;
 
-  get ref() {
+  private get ref() {
     return this._ref!;
   }
 
-  get v() {
+  private get v() {
     return this._ref!.value;
   }
 
