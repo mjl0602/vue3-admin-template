@@ -31,7 +31,7 @@ class BasicTable<T, E extends BasicQueryParams> {
 
   static refTable = function <T, E extends BasicQueryParams = any>(
     data: Queryable<T, E>,
-    queryParams: BasicQueryParams,
+    queryParams: E,
   ): [Ref<TableState<T, E>>, BasicTable<T, E>] {
     const table = new BasicTable<T, E>();
     const finalConfig = {

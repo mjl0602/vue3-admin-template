@@ -8,7 +8,7 @@ export interface AdminModel {
 
 /** 搜索条件 */
 export interface AdminModelQueryParmas extends BasicQueryParams {
-
+    asd: number,
 }
 
 export default class AdminQuery extends Queryable<AdminModel, AdminModelQueryParmas> {

@@ -59,7 +59,7 @@ const admin = new AdminQuery();
 const [table, actions] = refTable<AdminModel, AdminModelQueryParmas>(
   admin,
   {
-    
+    asd: 123,
   });
 
 </script>
