@@ -35,7 +35,7 @@ class BasicTable<T> {
   static refTable = function <T>(data: Queryable<T>, config: Partial<TableState<T>>): [Ref<TableState<T>>, BasicTable<T>] {
     const table = new BasicTable<T>();
     const finalConfig = Object.assign(config, {
-      objStr: '条目',
+      objStr: '数据',
       list: [],
       total: 0,
       listLoading: false,
