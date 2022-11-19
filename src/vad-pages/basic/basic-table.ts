@@ -4,7 +4,6 @@ import { ElNotification, ElMessageBox } from 'element-plus'
 
 interface TableState<T, E extends BasicQueryParams> {
   // 表格内容
-  objStr: string,
   list: T[],
   total: number,
   listLoading: boolean,
@@ -29,13 +28,16 @@ class BasicTable<T, E extends BasicQueryParams> {
     return this._ref!.value;
   }
 
+  private get objName() {
+    return this.v.source.objectName;
+  }
+
   static refTable = function <T, E extends BasicQueryParams = any>(
     data: Queryable<T, E>,
     queryParams: E,
   ): [Ref<TableState<T, E>>, BasicTable<T, E>] {
     const table = new BasicTable<T, E>();
     const finalConfig = {
-      objStr: '数据',
       list: [],
       total: 0,
       listLoading: false,
@@ -86,6 +88,7 @@ class BasicTable<T, E extends BasicQueryParams> {
   }
   // 增加
   async add() {
+    console.log("add", this);
     this.v.isNew = true;
     this.v.row = Object.assign({}, this.v.source.defaultObject);
     this.v.rules = this.v.source.rules;
@@ -106,11 +109,11 @@ class BasicTable<T, E extends BasicQueryParams> {
       if (this.v.isNew) {
         console.log("add");
         await this.v.source.add(this.v.row);
-        this.notifySuccess("新增成功", `成功新增${this.v.objStr}`);
+        this.notifySuccess("新增成功", `成功新增${this.objName}`);
       } else {
         console.log("edit");
         await this.v.source.edit(this.v.row);
-        this.notifySuccess("修改成功", `${this.v.objStr}修改成功`);
+        this.notifySuccess("修改成功", `${this.objName}修改成功`);
       }
       this.v.addDialogVisible = false;
       await this.queryAll();
@@ -122,13 +125,18 @@ class BasicTable<T, E extends BasicQueryParams> {
   // 删除
   async deleteRow(row: T) {
     try {
-      await ElMessageBox.confirm("删除操作将不能撤销, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "error",
-      });
+      try {
+        await ElMessageBox.confirm("删除操作将不能撤销, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "error",
+        });
+      } catch (error) {
+        console.error(error);
+        return;
+      }
       await this.v.source.deleteObj(row);
-      this.notifySuccess("删除成功", `${this.v.objStr}已被删除`);
+      this.notifySuccess("删除成功", `${this.objName}已被删除`);
     } catch (error) {
       console.error(error);
       this.notifyError("失败", "操作发生错误，数据提交失败");
@@ -137,15 +145,16 @@ class BasicTable<T, E extends BasicQueryParams> {
   }
 
   get dialogTitle() {
-    return (this.v.isNew ? "新增" : "修改") + this.v.objStr;
+    return (this.v.isNew ? "新增" : "修改") + this.objName;
   }
 
-  handleSizeChange(size) {
+  sizeChange(size: number) {
     this.v.query.pageNum = 1;
     this.v.query.pageSize = size;
     this.queryAll();
   }
-  handleCurrentChange(page) {
+
+  pageChange(page: number) {
     this.v.query.pageNum = page;
     this.queryAll();
   }

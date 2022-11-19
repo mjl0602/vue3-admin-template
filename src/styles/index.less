@@ -1,2 +1,45 @@
 @import './var.css';
 @import 'element-plus/theme-chalk/dark/css-vars.css';
+
+.app-container {
+  .filter-container-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    * {
+      flex-shrink: 0;
+    }
+
+    .filter-item {
+      margin-right: 16px;
+      margin-bottom: 12px;
+    }
+
+    .filter-item-title {
+      margin-right: 12px;
+      margin-left: 12px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #4a4a4a;
+    }
+
+    .filter-item-text {
+      margin-right: 12px;
+      margin-left: 12px;
+      margin-bottom: 10px;
+      font-weight: normal;
+      color: #9b9b9b;
+      font-size: 14px;
+    }
+
+    .expanded {
+      flex-grow: 1;
+      flex-shrink: 0;
+    }
+  }
+
+  .pagination-container {
+    padding: 22px 16px;
+  }
+}

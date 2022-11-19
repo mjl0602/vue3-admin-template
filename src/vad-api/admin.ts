@@ -11,7 +11,17 @@ export interface AdminQueryParmas extends BasicQueryParams {
     searchString: string,
 }
 
+/** 数据源，增删查改等请求 */
 export default class AdminQuery extends Queryable<AdminModel, AdminQueryParmas> {
+    // constructor(id) {
+    //     super();
+    //     this.id = id;
+    // }
+
+    /** 对象名称 */
+    get objectName(): string {
+        return '管理员'
+    };
 
     // 默认的内容
     get defaultObject() {
@@ -32,10 +42,10 @@ export default class AdminQuery extends Queryable<AdminModel, AdminQueryParmas> 
     };
 
     // 查询全部
-    async all(params: AdminQueryParmas) {
-        var res: AdminModel[] = [];
-        return res
-    }
+    // async all(params: AdminQueryParmas) {
+    //     var res: AdminModel[] = [];
+    //     return res
+    // }
 
     // // 上传修改
     // async edit(obj: AdminModel) {

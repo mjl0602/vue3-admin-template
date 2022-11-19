@@ -53,12 +53,12 @@ export const useAppStore = defineStore('app', {
       hamburger: true, // 折叠图标
       screenfull: true, // 全屏图标
       size: true, // 尺寸图标
-      locale: true, // 多语言图标
+      locale: false, // 多语言图标
       tagsView: true, // 标签页
       tagsViewIcon: true, // 是否显示标签图标
       logo: true, // logo
       fixedHeader: true, // 固定toolheader
-      footer: true, // 显示页脚
+      footer: false, // 显示页脚
       greyMode: false, // 是否开始灰色模式，用于特殊悼念日
       dynamicRouter: wsCache.get('dynamicRouter') || false, // 是否动态路由
       fixedMenu: wsCache.get('fixedMenu') || false, // 是否固定菜单
