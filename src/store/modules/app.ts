@@ -27,6 +27,7 @@ interface AppState {
   pageLoading: boolean
   layout: LayoutType
   title: string
+  token: string
   userInfo: string
   isDark: boolean
   currentSize: ElementPlusSize
@@ -44,6 +45,7 @@ export const useAppStore = defineStore('app', {
       sizeMap: ['default', 'large', 'small'],
       mobile: false, // 是否是移动端
       title: import.meta.env.VITE_APP_TITLE, // 标题
+      token: '',
       pageLoading: false, // 路由跳转loading
 
       breadcrumb: true, // 面包屑
@@ -153,6 +155,9 @@ export const useAppStore = defineStore('app', {
     getTitle(): string {
       return this.title
     },
+    getToken(): string {
+      return this.token
+    },
     getUserInfo(): string {
       return this.userInfo
     },
@@ -236,6 +241,9 @@ export const useAppStore = defineStore('app', {
     },
     setTitle(title: string) {
       this.title = title
+    },
+    setToken(token: string) {
+      this.token = token
     },
     setIsDark(isDark: boolean) {
       this.isDark = isDark

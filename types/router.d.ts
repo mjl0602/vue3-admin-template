@@ -63,12 +63,12 @@ declare global {
     fullPath?: string
   }
 
-  declare interface AppCustomRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
+  declare interface RouteConfig extends Omit<RouteRecordRaw, 'meta'> {
     name: string
     meta: RouteMeta
     component: string
     path: string
     redirect: string
-    children?: AppCustomRouteRecordRaw[]
+    children?: RouteConfig[]
   }
 }

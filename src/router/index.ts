@@ -61,27 +61,35 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     component: Layout,
     redirect: '/dashboard/analysis',
     name: 'Dashboard',
-    meta: {
-      title: t('router.dashboard'),
-      icon: 'ant-design:dashboard-filled',
-    },
+    meta: { title: 'Dashboard' },
     children: [
       {
         path: 'analysis',
-        component: () => import('@/views/Dashboard/Analysis.vue'),
+        component: () => import('@/views/index.vue'),
         name: 'Analysis',
         meta: {
           title: t('router.analysis'),
+          icon: 'ant-design:dashboard-filled',
           noCache: true,
           affix: true
         }
       },
+    ]
+  },
+  {
+    path: '/table',
+    component: Layout,
+    redirect: '/table/admin',
+    name: 'table',
+    meta: { title: '表格' },
+    children: [
       {
-        path: 'table',
+        path: 'admin',
         component: () => import('@/vad-pages/adminManage.vue'),
-        name: 'table',
+        name: 'admin',
         meta: {
-          title: '表格',
+          title: '管理员管理',
+          icon: 'ant-design:table',
           noCache: true
         }
       }

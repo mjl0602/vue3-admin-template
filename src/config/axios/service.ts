@@ -10,11 +10,21 @@ import qs from 'qs'
 
 import { config } from './config'
 
-import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
 
-const { result_code, base_url } = config
+import { ElMessage, resultProps } from 'element-plus'
 
-export const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH]
+import { useCache } from '@/hooks/web/useCache'
+import { useAppStore } from '@/store/modules/app'
+
+const appStore = useAppStore()
+
+const { wsCache } = useCache()
+const { base_url } = config
+
+const router = useRouter()
+
+const PATH_URL = base_url[import.meta.env.VITE_API_BASEPATH]
 
 // 创建axios实例
 const service: AxiosInstance = axios.create({
@@ -28,7 +38,7 @@ service.interceptors.request.use(
     if (
       config.method === 'post' &&
       (config.headers as AxiosRequestHeaders)['Content-Type'] ===
-        'application/x-www-form-urlencoded'
+      'application/x-www-form-urlencoded'
     ) {
       config.data = qs.stringify(config.data)
     }
@@ -47,6 +57,12 @@ service.interceptors.request.use(
       config.params = {}
       config.url = url
     }
+    const token = appStore.getToken || wsCache.get('token');
+    if (token) {
+      if (!config.headers) config.headers = {}
+      config.headers['Authorization'] = 'Bearer ' + token
+    }
+    console.log('发起请求', config);
     return config
   },
   (error: AxiosError) => {
@@ -59,13 +75,18 @@ service.interceptors.request.use(
 // response 拦截器
 service.interceptors.response.use(
   (response: AxiosResponse<any>) => {
+    console.log('请求返回', response);
     if (response.config.responseType === 'blob') {
       // 如果是文件流，直接过
       return response
-    } else if (response.data.code === result_code) {
+    } else if (response.data.code === 200) {
       return response.data
+    } else if (response.data.code === 401) {
+      ElMessage.error(response.data.msg)
+      router.replace('/login')
+      return response.data;
     } else {
-      ElMessage.error(response.data.message)
+      ElMessage.error(response.data.msg)
     }
   },
   (error: AxiosError) => {

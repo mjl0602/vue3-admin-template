@@ -9,7 +9,7 @@ import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import PurgeIcons from 'vite-plugin-purge-icons'
-import { viteMockServe } from 'vite-plugin-mock'
+// import { viteMockServe } from 'vite-plugin-mock'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import VueMarcos from 'unplugin-vue-macros/vite'
 
@@ -59,17 +59,17 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         svgoOptions: true
       }),
       PurgeIcons(),
-      viteMockServe({
-        ignore: /^\_/,
-        mockPath: 'mock',
-        localEnabled: !isBuild,
-        prodEnabled: isBuild,
-        injectCode: `
-          import { setupProdMockServer } from '../mock/_createProductionServer'
+      // viteMockServe({
+      //   ignore: /^\_/,
+      //   mockPath: 'mock',
+      //   localEnabled: !isBuild,
+      //   prodEnabled: isBuild,
+      //   injectCode: `
+      //     import { setupProdMockServer } from '../mock/_createProductionServer'
 
-          setupProdMockServer()
-          `
-      }),
+      //     setupProdMockServer()
+      //     `
+      // }),
       VueMarcos(),
       createHtmlPlugin({
         inject: {
@@ -119,9 +119,11 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       proxy: {
         // 选项写法
         '/api': {
-          target: 'http://127.0.0.1:8000',
+          target: 'https://test.ybhospital.net/api/', // 腾讯云
           changeOrigin: true,
-          rewrite: path => path.replace(/^\/api/, '')
+          secure: false,
+          ws: false, // 需要socket时启用
+          rewrite: (path) => path.replace(/^\/api/g, ''),
         }
       },
       hmr: {
