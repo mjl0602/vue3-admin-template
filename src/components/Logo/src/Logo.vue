@@ -59,14 +59,14 @@ watch(
     :class="[
       prefixCls,
       layout !== 'classic' ? `${prefixCls}__Top` : '',
-      'flex !h-[var(--logo-height)] items-center cursor-pointer pl-8px relative',
+      'flex !h-[var(--logo-height)] items-center cursor-pointer pl-16px relative',
       'dark:bg-[var(--el-bg-color)]'
     ]"
     to="/"
   >
     <img
       src="@/assets/imgs/logo.png"
-      class="w-[calc(var(--logo-height)-10px)] h-[calc(var(--logo-height)-10px)]"
+      class="w-[calc(var(--logo-height)-30px)] h-[calc(var(--logo-height)-30px)]"
     />
     <div
       v-if="show"

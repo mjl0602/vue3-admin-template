@@ -114,11 +114,12 @@ const signIn = async () => {
 
       try {
         const loginRes = await loginApi(formData)
-        const res = await getUserInfoApi();
-        console.log('loginApi', loginRes);
+        appStore.setToken(loginRes.data);
+        wsCache.set('token', undefined);
         if (remember.value) {
           wsCache.set('token', loginRes.data);
         }
+        const res = await getUserInfoApi();
         if (res) {
           wsCache.set(appStore.getUserInfo, res.data)
           // 是否使用动态路由
@@ -172,7 +173,7 @@ const toRegister = () => {
     <template #tool>
       <div class="flex justify-between items-center w-[100%]">
         <ElCheckbox v-model="remember" :label="t('login.remember')" size="small" />
-        <ElLink type="primary" :underline="false">{{ t('login.forgetPassword') }}</ElLink>
+        <!-- <ElLink type="primary" :underline="false">{{ t('login.forgetPassword') }}</ElLink> -->
       </div>
     </template>
 

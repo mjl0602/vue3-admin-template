@@ -89,7 +89,7 @@ export const generateRoutesFn1 = (
 }
 
 // 后端控制路由生成
-export const generateRoutesFn2 = (routes: RouteConfig[]): AppRouteRecordRaw[] => {
+const generateRoutesFn2 = (routes: RouteConfig[]): AppRouteRecordRaw[] => {
   const res: AppRouteRecordRaw[] = []
 
   for (const route of routes) {

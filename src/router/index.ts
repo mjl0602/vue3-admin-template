@@ -68,7 +68,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/index.vue'),
         name: 'Analysis',
         meta: {
-          title: t('router.analysis'),
+          title: 'Dashboard',
           icon: 'ant-design:dashboard-filled',
           noCache: true,
           affix: true
